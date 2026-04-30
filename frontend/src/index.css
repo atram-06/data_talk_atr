@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Dark Theme (default) ─── */
+:root {
+  --bg-primary: #070b14;
+  --bg-secondary: #0d1526;
+  --bg-card: rgba(255, 255, 255, 0.04);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --accent-cyan: #00d4ff;
+  --accent-green: #00ff88;
+  --text-primary: #e8edf5;
+  --text-muted: #5a6a85;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.10);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --skeleton-bg: rgba(255, 255, 255, 0.05);
+  --tooltip-bg: #0d1526;
+  --tooltip-border: rgba(255, 255, 255, 0.1);
+  --code-bg: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+  --scrollbar-hover: rgba(255, 255, 255, 0.2);
+  --gradient-border-from: rgba(0, 212, 255, 0.3);
+  --gradient-border-to: rgba(0, 255, 136, 0.1);
+  --shadow-glow: rgba(0, 212, 255, 0.05);
+  --user-bubble-bg: rgba(0, 212, 255, 0.10);
+  --user-bubble-border: rgba(0, 212, 255, 0.20);
+}
+
+/* ─── Light Theme ─── */
+[data-theme='light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f2f7;
+  --bg-card: rgba(0, 0, 0, 0.04);
+  --bg-card-hover: rgba(0, 0, 0, 0.07);
+  --accent-cyan: #0078a8;
+  --accent-green: #008a48;
+  --text-primary: #111827;
+  --text-muted: #5c6370;
+  --border-subtle: rgba(0, 0, 0, 0.10);
+  --border-medium: rgba(0, 0, 0, 0.18);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.12);
+  --skeleton-bg: rgba(0, 0, 0, 0.08);
+  --tooltip-bg: #ffffff;
+  --tooltip-border: rgba(0, 0, 0, 0.12);
+  --code-bg: rgba(0, 0, 0, 0.05);
+  --scrollbar-thumb: rgba(0, 0, 0, 0.15);
+  --scrollbar-hover: rgba(0, 0, 0, 0.25);
+  --gradient-border-from: rgba(0, 120, 168, 0.3);
+  --gradient-border-to: rgba(0, 138, 72, 0.15);
+  --shadow-glow: rgba(0, 120, 168, 0.1);
+  --user-bubble-bg: rgba(0, 120, 168, 0.08);
+  --user-bubble-border: rgba(0, 120, 168, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover);
+}
+
+/* Glassmorphism card base */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.glass-card-hover:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 30px var(--shadow-glow);
+}
+
+/* Gradient border effect */
+.gradient-border { position: relative; }
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 17px;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--gradient-border-from), var(--gradient-border-to), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Voice button animations */
+@keyframes voice-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.voice-ring { animation: voice-ring 1.2s ease-out infinite; }
+
+/* Toast notification */
+@keyframes toast-in {
+  0% { transform: translateY(20px) translateX(-50%); opacity: 0; }
+  100% { transform: translateY(0) translateX(-50%); opacity: 1; }
+}
+@keyframes toast-out {
+  0% { transform: translateY(0) translateX(-50%); opacity: 1; }
+  100% { transform: translateY(-10px) translateX(-50%); opacity: 0; }
+}
+.toast-enter { animation: toast-in 0.3s ease-out both; }
+.toast-exit { animation: toast-out 0.3s ease-in both; }
+
+/* Theme toggle animation */
+@keyframes theme-spin {
+  0% { transform: rotate(0deg) scale(0.8); opacity: 0; }
+  100% { transform: rotate(360deg) scale(1); opacity: 1; }
+}
+.theme-icon-enter { animation: theme-spin 0.4s ease-out both; }
+
+/* Recharts tooltip theme-aware */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: var(--tooltip-bg) !important;
+  border: 1px solid var(--tooltip-border) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+}
+.recharts-tooltip-item {
+  color: var(--text-primary) !important;
+}
+.recharts-tooltip-label {
+  color: var(--accent-cyan) !important;
+  font-weight: 600 !important;
+}
+
+/* Theme-aware utility classes */
+.border-themed { border-color: var(--border-subtle); }
+.border-themed-medium { border-color: var(--border-medium); }
+.bg-themed-primary { background: var(--bg-primary); }
+.bg-themed-secondary { background: var(--bg-secondary); }
+.bg-themed-card { background: var(--bg-card); }
+.text-themed-primary { color: var(--text-primary); }
+.text-themed-muted { color: var(--text-muted); }
