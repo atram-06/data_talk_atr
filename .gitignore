@@ -1,0 +1,8 @@
+node_modules/
+.env
+datatalk.db
+datatalk.db-shm
+datatalk.db-wal
+uploads/
+frontend/dist/
+.DS_Store
